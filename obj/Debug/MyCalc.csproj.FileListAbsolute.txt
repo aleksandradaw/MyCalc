@@ -1,0 +1,11 @@
+C:\Users\aleks\OneDrive\Desktop\Code\MyCalc\MyCalc\bin\Debug\MyCalc.exe.config
+C:\Users\aleks\OneDrive\Desktop\Code\MyCalc\MyCalc\bin\Debug\MyCalc.exe
+C:\Users\aleks\OneDrive\Desktop\Code\MyCalc\MyCalc\bin\Debug\MyCalc.pdb
+C:\Users\aleks\OneDrive\Desktop\Code\MyCalc\MyCalc\obj\Debug\MyCalc.csproj.AssemblyReference.cache
+C:\Users\aleks\OneDrive\Desktop\Code\MyCalc\MyCalc\obj\Debug\MyCalc.csproj.SuggestedBindingRedirects.cache
+C:\Users\aleks\OneDrive\Desktop\Code\MyCalc\MyCalc\obj\Debug\MyCalc.Form1.resources
+C:\Users\aleks\OneDrive\Desktop\Code\MyCalc\MyCalc\obj\Debug\MyCalc.Properties.Resources.resources
+C:\Users\aleks\OneDrive\Desktop\Code\MyCalc\MyCalc\obj\Debug\MyCalc.csproj.GenerateResource.cache
+C:\Users\aleks\OneDrive\Desktop\Code\MyCalc\MyCalc\obj\Debug\MyCalc.csproj.CoreCompileInputs.cache
+C:\Users\aleks\OneDrive\Desktop\Code\MyCalc\MyCalc\obj\Debug\MyCalc.exe
+C:\Users\aleks\OneDrive\Desktop\Code\MyCalc\MyCalc\obj\Debug\MyCalc.pdb
