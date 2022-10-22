@@ -100,7 +100,6 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(303, 384);
             this.tableLayoutPanel1.TabIndex = 0;
-            this.tableLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel1_Paint);
             // 
             // button12
             // 
@@ -148,10 +147,10 @@
             this.button10.Name = "button10";
             this.button10.Size = new System.Drawing.Size(90, 86);
             this.button10.TabIndex = 10;
-            this.button10.Text = ".";
+            this.button10.Text = ",";
             this.button10.UseCompatibleTextRendering = true;
             this.button10.UseVisualStyleBackColor = false;
-            this.button10.Click += new System.EventHandler(this.dot_Click);
+            this.button10.Click += new System.EventHandler(this.comma_Click);
             // 
             // button2
             // 
@@ -185,6 +184,7 @@
             this.button3.Text = "3";
             this.button3.UseCompatibleTextRendering = true;
             this.button3.UseVisualStyleBackColor = false;
+            this.button3.Click += new System.EventHandler(this.button_Click);
             // 
             // button4
             // 

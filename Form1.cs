@@ -1,6 +1,8 @@
 ﻿using MyCalc.MathOperations;
 using System;
+using System.Drawing.Imaging;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Windows.Forms;
 
 namespace MyCalc
@@ -10,7 +12,8 @@ namespace MyCalc
         private string _firstNumber; 
         private string _secondNumber;
         private MathOperation _currentMathOperation = MathOperation.None;
-        public int numberOfDots = 0;
+        public int numberOfCommas = 0;
+        public double firstNumber;
         public Form1()
         {
             InitializeComponent();
@@ -23,8 +26,8 @@ namespace MyCalc
             if (textBox1.Text == "0")
                 textBox1.Text = string.Empty;
 
-            if (value == "." && textBox1.Text == "0")
-                textBox1.Text = "0.";
+            if (value == "," && textBox1.Text == "0")
+                textBox1.Text = "0,";
             else
                 textBox1.Text += value;
 
@@ -37,8 +40,6 @@ namespace MyCalc
             {
                 _secondNumber += value;
             }
-
-            
         }
 
 
@@ -46,61 +47,71 @@ namespace MyCalc
         {
             var mathOperation = (sender as Button).Text;
 
-            var firstNumber = double.Parse(_firstNumber);
+            //char[] charArray = textBox1.Text.ToCharArray();
+           // int numberofChar = charArray.Count();
 
-
-            if (mathOperation == "+")
+            if (_firstNumber == null)
             {
-                _currentMathOperation = MathOperation.Addition;
-                textBox1.Text += mathOperation;
+                textBox1.Text = "0";
             }
 
-            if (mathOperation == "-")
+            if (_firstNumber != null)
             {
-                _currentMathOperation = MathOperation.Subtraction;
-                textBox1.Text += mathOperation;
-            }
+                firstNumber = double.Parse(_firstNumber);
 
-            if (mathOperation == "/")
-            {
-                _currentMathOperation = MathOperation.Division;
-                textBox1.Text += mathOperation;
-            }
+                if (mathOperation == "+")
+                {
+                    _currentMathOperation = MathOperation.Addition;
+                    textBox1.Text += mathOperation;
+                }
 
-            if (mathOperation == "x²")
-            {
-                _currentMathOperation = MathOperation.Exponentation;
+                if (mathOperation == "-")
+                {
+                    _currentMathOperation = MathOperation.Subtraction;
+                    textBox1.Text += mathOperation;
+                }
 
-                var result = MathCalc(firstNumber, 0);
-                textBox1.Text = result.ToString();
-                _firstNumber = result.ToString();
-                numberOfDots = 1;
-            }
+                if (mathOperation == "/")
+                {
+                    _currentMathOperation = MathOperation.Division;
+                    textBox1.Text += mathOperation;
+                }
 
-            if (mathOperation == "√")
-            {
-                _currentMathOperation = MathOperation.ExtractionOfRoot;
-               
-                var result = MathCalc(firstNumber, 0);
-                textBox1.Text = result.ToString();
-                _firstNumber = result.ToString();
-                numberOfDots = 1;
-            }
+                if (mathOperation == "x²")
+                {
+                    _currentMathOperation = MathOperation.Exponentation;
 
-            if (mathOperation == "x")
-            {
-                _currentMathOperation = MathOperation.Multiplication;
-                textBox1.Text += mathOperation;
+                    var result = MathCalc(firstNumber, 0);
+                    textBox1.Text = result.ToString();
+                    _firstNumber = result.ToString();
+                    numberOfCommas = 1;
+                }
+
+                if (mathOperation == "√")
+                {
+                    _currentMathOperation = MathOperation.ExtractionOfRoot;
+
+                    var result = MathCalc(firstNumber, 0);
+                    textBox1.Text = result.ToString();
+                    _firstNumber = result.ToString();
+                    numberOfCommas = 1;
+                }
+
+                if (mathOperation == "x")
+                {
+                    _currentMathOperation = MathOperation.Multiplication;
+                    textBox1.Text += mathOperation;
+                }
             }
+         
 
         }
 
-        private void dot_Click(object sender, EventArgs e)
+        private void comma_Click(object sender, EventArgs e)
         {
-            string isFirstDot = _firstNumber.ToString();
 
-            var dotChar = (sender as Button).Text;
-            if (_currentMathOperation == MathOperation.None && textBox1.Text.Contains("."))
+            var commaChar = (sender as Button).Text;
+            if (_currentMathOperation == MathOperation.None && textBox1.Text.Contains(","))
             {
                 string textBox;
                 textBox = textBox1.Text.Trim();
@@ -109,28 +120,42 @@ namespace MyCalc
 
             else if (_currentMathOperation != MathOperation.None)
             {
-                char dot = '.';
+                char comma = ',';
                 char[] textBoxArray = textBox1.Text.ToArray();
-                for(int i = 0; i < textBoxArray.Length; i++)
+                for (int i = 0; i < textBoxArray.Length; i++)
                 {
-                    if (textBoxArray[i] == dot)
-                        numberOfDots += 1;
+                    if (textBoxArray[i] == comma)
+                        numberOfCommas += 1;
                     else
                         continue;
                 }
 
-                if (numberOfDots > 1)
+                if (numberOfCommas > 1)
                 {
                     string textBox;
                     textBox = textBox1.Text.Trim();
                     textBox1.Text = textBox;
                 }
                 else
-                    textBox1.Text += dotChar;
+                {
+                    if (_secondNumber != null)
+                    {
+                        textBox1.Text += commaChar;
+                        _secondNumber += ",";
+                    }
+                    else
+                    {
+                        textBox1.Text += "0,";
+                        _secondNumber += "0,";
+                    }
+                }
             }
-            
+
             else
-                textBox1.Text += dotChar;
+            {
+                textBox1.Text += commaChar;
+                _firstNumber += ",";
+            }
         }
 
         private void clear_Click(object sender, EventArgs e)
@@ -153,6 +178,10 @@ namespace MyCalc
             {
                 secondNumber = 0;
             }
+            else if(_secondNumber == "0,")
+            {
+                secondNumber = 0;
+            }
             else
                 secondNumber = double.Parse(_secondNumber);
 
@@ -163,17 +192,7 @@ namespace MyCalc
             _currentMathOperation = MathOperation.None;
             _secondNumber = null;
             
-            numberOfDots = 1;
-
-        }
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-           
-        }
-
-        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
-        {
+            numberOfCommas = 0;
 
         }
 
@@ -193,11 +212,11 @@ namespace MyCalc
                 case MathOperation.Subtraction:
                     if(secondNumber == null)
                     {
-                        return firstNumber;
+                        return double.Parse(textBox1.Text);
                     }
                     return firstNumber - secondNumber;
                 case MathOperation.Exponentation:
-                    return Math.Exp(firstNumber);
+                    return firstNumber * firstNumber;
                 case MathOperation.Addition:
                     return firstNumber + secondNumber;
                 case MathOperation.Multiplication:
@@ -208,7 +227,5 @@ namespace MyCalc
 
             return 0;
         }
-
-
     }
 }
