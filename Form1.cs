@@ -40,6 +40,8 @@ namespace MyCalc
             {
                 _secondNumber += value;
             }
+
+            
         }
 
 
@@ -59,56 +61,57 @@ namespace MyCalc
             {
                 firstNumber = double.Parse(_firstNumber);
 
-                if (mathOperation == "+")
-                {
-                    _currentMathOperation = MathOperation.Addition;
-                    textBox1.Text += mathOperation;
-                }
-
-                if (mathOperation == "-")
-                {
-                    _currentMathOperation = MathOperation.Subtraction;
-                    textBox1.Text += mathOperation;
-                }
-
-                if (mathOperation == "/")
-                {
-                    _currentMathOperation = MathOperation.Division;
-                    textBox1.Text += mathOperation;
-                }
-
-                if (mathOperation == "x²")
-                {
-                    _currentMathOperation = MathOperation.Exponentation;
-
-                    var result = MathCalc(firstNumber, 0);
-                    textBox1.Text = result.ToString();
-                    _firstNumber = result.ToString();
-                    numberOfCommas = 1;
-                }
-
-                if (mathOperation == "√")
-                {
-                    _currentMathOperation = MathOperation.ExtractionOfRoot;
-
-                    var result = MathCalc(firstNumber, 0);
-                    textBox1.Text = result.ToString();
-                    _firstNumber = result.ToString();
-                    numberOfCommas = 1;
-                }
-
-                if (mathOperation == "x")
-                {
-                    _currentMathOperation = MathOperation.Multiplication;
-                    textBox1.Text += mathOperation;
-                }
+            if (mathOperation == "+")
+            {
+                _currentMathOperation = MathOperation.Addition;
+                textBox1.Text += mathOperation;
             }
-         
+
+            if (mathOperation == "-")
+            {
+                _currentMathOperation = MathOperation.Subtraction;
+                textBox1.Text += mathOperation;
+            }
+
+            if (mathOperation == "/")
+            {
+                _currentMathOperation = MathOperation.Division;
+                textBox1.Text += mathOperation;
+            }
+
+            if (mathOperation == "x²")
+            {
+                _currentMathOperation = MathOperation.Exponentation;
+
+                var result = MathCalc(firstNumber, 0);
+                textBox1.Text = result.ToString();
+                _firstNumber = result.ToString();
+                    numberOfCommas = 1;
+            }
+
+            if (mathOperation == "√")
+            {
+                _currentMathOperation = MathOperation.ExtractionOfRoot;
+               
+                var result = MathCalc(firstNumber, 0);
+                textBox1.Text = result.ToString();
+                _firstNumber = result.ToString();
+                    numberOfCommas = 1;
+            }
+
+            if (mathOperation == "x")
+            {
+                _currentMathOperation = MathOperation.Multiplication;
+                textBox1.Text += mathOperation;
+            }
+            }
+
 
         }
 
         private void comma_Click(object sender, EventArgs e)
         {
+            string isFirstDot = _firstNumber.ToString();
 
             var commaChar = (sender as Button).Text;
             if (_currentMathOperation == MathOperation.None && textBox1.Text.Contains(","))
@@ -150,7 +153,7 @@ namespace MyCalc
                     }
                 }
             }
-
+            
             else
             {
                 textBox1.Text += commaChar;
@@ -227,5 +230,7 @@ namespace MyCalc
 
             return 0;
         }
+
+
     }
 }
