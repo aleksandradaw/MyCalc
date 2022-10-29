@@ -14,6 +14,10 @@ namespace MyCalc
         private MathOperation _currentMathOperation = MathOperation.None;
         public int numberOfCommas = 0;
         public double firstNumber;
+        string text;
+
+
+        public char[] mathOper = new char[] { '/', '+', '-', 'x' };
         public Form1()
         {
             InitializeComponent();
@@ -40,17 +44,50 @@ namespace MyCalc
             {
                 _secondNumber += value;
             }
-
-            
         }
 
 
         private void mathOp_Click(object sender, EventArgs e)
         {
-            var mathOperation = (sender as Button).Text;
+            string mathOperation = (sender as Button).Text;
 
-            //char[] charArray = textBox1.Text.ToCharArray();
-           // int numberofChar = charArray.Count();
+            var charList = textBox1.Text.ToList();
+            int numberOfChar = charList.Count();
+
+            int numberOfCommas = 0;
+            int numberOfOperators = 0;
+            
+            for (int i = 0; i < 4; i++)
+            {
+                foreach (char c in charList)
+                {
+                    if (c == mathOper[i] & _secondNumber != null)
+                        numberOfOperators = 1;
+                }
+            }
+
+
+            for (int i = 0; i < 4; i++)
+            {
+               
+             
+                if (charList[numberOfChar-1] == mathOper[i] & _secondNumber == null)
+                {
+                    textBox1.Text = textBox1.Text.Remove(charList.Count()-1);
+                    break;
+                }
+            }
+
+            foreach (char c in charList)
+            {
+                if (c == ',')
+                    numberOfCommas++;
+            }
+
+            if (numberOfCommas == 2 | numberOfOperators ==1 )
+            {
+                result_Click(sender, e);
+            }
 
             if (_firstNumber == null)
             {
@@ -105,8 +142,6 @@ namespace MyCalc
                 textBox1.Text += mathOperation;
             }
             }
-
-
         }
 
         private void comma_Click(object sender, EventArgs e)
@@ -171,6 +206,8 @@ namespace MyCalc
 
         private void result_Click(object sender, EventArgs e)
         {
+            double result;
+
             if (_currentMathOperation == MathOperation.None)
                 return;
 
@@ -180,15 +217,18 @@ namespace MyCalc
             if (_secondNumber == null)
             {
                 secondNumber = 0;
+                result = firstNumber;
             }
-            else if(_secondNumber == "0,")
+            else if (_secondNumber == "0,")
             {
                 secondNumber = 0;
+                result = MathCalc(firstNumber, secondNumber);
             }
             else
+            {
                 secondNumber = double.Parse(_secondNumber);
-
-            var result = MathCalc(firstNumber, secondNumber);
+                result = MathCalc(firstNumber, secondNumber);
+            }
 
             textBox1.Text = result.ToString();
             _firstNumber = result.ToString();
